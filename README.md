@@ -5,14 +5,14 @@ from the current cursor position on.
 
 For example, say you have:
 
-1: fname = models.CharField(blank=False, max_length=15)
-2: lname = models.CharField(blank=False, max_length=25)
-3: mname^
+    1: fname = models.CharField(blank=False, max_length=15)
+    2: lname = models.CharField(blank=False, max_length=25)
+    3: mname^
 
 and your cursor is the ^ symbol on line three. Running the
 command `Duplicate Same` would fill in line 3 to look like:
 
-3: mname = models.CharField(blank=False, max_length=
+    3: mname = models.CharField(blank=False, max_length=
 
 ## For Help
 
