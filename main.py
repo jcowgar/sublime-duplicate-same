@@ -3,6 +3,9 @@ import difflib
 import sublime
 import sublime_plugin
 
+from .lib.Snippet import generate
+
+
 class DuplicateSameCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         region = self.view.sel()[0]
@@ -23,30 +26,6 @@ class DuplicateSameCommand(sublime_plugin.TextCommand):
         line1 = self.view.substr(sublime.Region(p1p, r1.end()))
         line2 = self.view.substr(sublime.Region(p2p, r2.end()))
 
-        snippet = self.generate_snippet(line1, line2)
+        snippet = generate(line1, line2)
 
         self.view.run_command("insert_snippet", {"contents": snippet})
-
-    def generate_snippet(self, a, b):
-        snippet = ''
-        snippet_idx = 0
-        in_snippet = False
-
-        for i, s in enumerate(difflib.ndiff(a, b)):
-            if s[0] == ' ':
-                snippet += s[2]
-            elif s[0] == '-':
-                if in_snippet is False:
-                    snippet_idx += 1
-                    snippet += '${%i:' % snippet_idx
-                    in_snippet = True
-                snippet += s[2]
-            elif s[0] == '+':
-                if in_snippet is True:
-                    in_snippet = False
-                    snippet += '}'
-
-        if in_snippet is True:
-            snippet += '}'
-
-        return snippet
