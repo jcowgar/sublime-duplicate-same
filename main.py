@@ -26,6 +26,6 @@ class DuplicateSameCommand(sublime_plugin.TextCommand):
         line1 = self.view.substr(sublime.Region(p1p, r1.end()))
         line2 = self.view.substr(sublime.Region(p2p, r2.end()))
 
-        snippet = generate(line1, line2)
+        snippet = generate(line2, line1)
 
         self.view.run_command("insert_snippet", {"contents": snippet})
